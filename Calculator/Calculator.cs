@@ -14,9 +14,17 @@ namespace Calculator
         /// <returns>It returns the sum of the numbers.</returns>
         public int Add(string input)
         {
+            char delimiter = '\0';
+            int delimiterLength = GetCustomDelimiter(input, out delimiter);
+
+            if (delimiterLength > 0)
+            {
+                input = input.Substring(delimiterLength + 4);
+            }
+            char[] delimiters = new char[] { ',', '\n', delimiter};
             // this is to replace the character \n in the input for the real end of line character. 
             input = input.Replace("\\n", "\n");
-            string[] numberInput = input.Split(new[] { ',', '\n' });
+            string[] numberInput = input.Split(delimiters);
 
             int value = 0;
             int response = 0;
@@ -44,10 +52,30 @@ namespace Calculator
             length = negativeNumbers.Length;
             if (length > 0)
             {
+                // We remove the last ',' from the negative numbers list.
                 throw new ArgumentException(negativeNumbers.Remove(length - 1));
             }
 
             return response;
+        }
+
+        /// <summary>
+        /// We parse the input to find the delimiter char
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="delimiter"></param>
+        /// <returns>The size of the delimiter. -1 if no custom delimiter was found.</returns>
+        private int GetCustomDelimiter(string input, out char delimiter)
+        {
+            delimiter = '\0';
+            int endOfDelimiterIndex = input.IndexOf("\\n");
+            if (input.StartsWith("//") && input.Length > endOfDelimiterIndex + 2)
+            {
+                delimiter = input[2];
+                return 1;
+            }
+
+            return -1;
         }
     }
 }
