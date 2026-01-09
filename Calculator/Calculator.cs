@@ -10,11 +10,6 @@ namespace Calculator
         {
             string[] numberInput = input.Split(',');
 
-            if (numberInput.Length > 2)
-            {
-                throw new ArgumentException();
-            }
-
             int value = 0;
             int response = 0;
             bool success = false;
