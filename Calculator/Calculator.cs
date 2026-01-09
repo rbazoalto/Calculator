@@ -9,12 +9,13 @@ namespace Calculator
     {
         /// <summary>
         /// This method adds 2 or more numbers.
-        /// the niput is a string that contains the numbers separated by commas or \n
+        /// the input is a string that contains the numbers separated by commas or \n
         /// </summary>
         /// <param name="input"></param>
+        /// <param name="message">This will contain the formatted operation</param>
         /// <returns>It returns the sum of the numbers.</returns>
-        public int Add(string input)
-        {
+        public int Add(string input, out string message)
+        {            
             string delimiterString = string.Empty;
             int value = 0;
             int response = 0;
@@ -22,7 +23,7 @@ namespace Calculator
             string negativeNumbers = string.Empty;
             int length = 0;
             string[] numberInput = null;
-
+            string operation = string.Empty;
             int upperBound = 1000;
             string[] defaultDelimiters = new string[] { ",", "\\n" };
             bool hasLongDelimiter = input.StartsWith("//[") && input.Contains("\\n");
@@ -45,16 +46,21 @@ namespace Calculator
             {
                 item.Trim();
                 success = int.TryParse(item, out value);
-
                 // Only if this is a valid number smaller or equal than the upper bound, we will add it. 
                 if (success && value <= upperBound)
                 {
                     if (value < 0)
                     {
                         negativeNumbers = negativeNumbers + value + ",";
+                        operation = operation + "0+";
                         continue;
                     }
+                    operation = operation + item + "+";
                     response += value;
+                }
+                else
+                {
+                    operation = operation + "0+";
                 }
             }
 
@@ -64,7 +70,7 @@ namespace Calculator
                 // We remove the last ',' from the negative numbers list.
                 throw new ArgumentException(negativeNumbers.Remove(length - 1));
             }
-
+            message = operation.Remove(operation.Length - 1);
             return response;
         }
     }

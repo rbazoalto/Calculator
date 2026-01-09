@@ -11,11 +11,12 @@ namespace Calculator
             Calculator myCalc = new Calculator();
             Console.WriteLine("Please enter the number you would like to add (i.e. '1,3')");
             string input = Console.ReadLine();
+            string operation = string.Empty;
 
             try
             {
-                int res = myCalc.Add(input);
-                Console.WriteLine("{0} = {1}.", input, res);
+                int res = myCalc.Add(input, out operation);
+                Console.WriteLine("{0} = {1}.", operation, res);
             }
             catch (ArgumentException ex)
             {
