@@ -17,6 +17,10 @@ namespace Calculator
                 int res = myCalc.Add(input);
                 Console.WriteLine("{0} = {1}.", input, res);
             }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine("Negative numbers are not allowed: {0}.", ex.Message);
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);

@@ -21,6 +21,8 @@ namespace Calculator
             int value = 0;
             int response = 0;
             bool success = false;
+            string negativeNumbers = string.Empty;
+            int length = 0;
 
             foreach (string item in numberInput)
             {
@@ -30,8 +32,19 @@ namespace Calculator
                 // Only if this is a valid number, we will add it. 
                 if (success)
                 {
+                    if (value < 0)
+                    {
+                        negativeNumbers = negativeNumbers + value + ",";
+                        continue;
+                    }
                     response += value;
                 }
+            }
+
+            length = negativeNumbers.Length;
+            if (length > 0)
+            {
+                throw new ArgumentException(negativeNumbers.Remove(length - 1));
             }
 
             return response;
