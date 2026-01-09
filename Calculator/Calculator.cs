@@ -29,8 +29,8 @@ namespace Calculator
                 item.Trim();
                 success = int.TryParse(item, out value);
 
-                // Only if this is a valid number, we will add it. 
-                if (success)
+                // Only if this is a valid number smaller than 1001, we will add it. 
+                if (success && value < 1001)
                 {
                     if (value < 0)
                     {
