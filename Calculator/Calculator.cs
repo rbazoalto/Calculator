@@ -12,9 +12,11 @@ namespace Calculator
         /// the input is a string that contains the numbers separated by commas or \n
         /// </summary>
         /// <param name="input"></param>
+        /// <param name="upperBound"></param>
+        /// <param name="dennyNegativeNumbers"></param>
         /// <param name="message">This will contain the formatted operation</param>
         /// <returns>It returns the sum of the numbers.</returns>
-        public int Add(string input, out string message)
+        public int Add(string input, int upperBound, bool dennyNegativeNumbers, out string message)
         {            
             string delimiterString = string.Empty;
             int value = 0;
@@ -24,7 +26,6 @@ namespace Calculator
             int length = 0;
             string[] numberInput = null;
             string operation = string.Empty;
-            int upperBound = 1000;
             string[] defaultDelimiters = new string[] { ",", "\\n" };
             bool hasLongDelimiter = input.StartsWith("//[") && input.Contains("\\n");
 
